@@ -1,1 +1,1 @@
-web: gunicorn myhrm.wsgi
+web: gunicorn myhrm.wsgi:application
