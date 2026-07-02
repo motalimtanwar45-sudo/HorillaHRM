@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise HR Hub - Premium Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { display: flex; background: #f8fafc; height: 100vh; color: #1e293b; }
+        
+        /* Premium Left Sidebar (Bayzat Theme) */
+        .sidebar { width: 260px; background: #0f172a; color: white; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+        .sidebar-brand { font-size: 22px; font-weight: 700; color: #38bdf8; text-align: center; margin-bottom: 40px; letter-spacing: 0.5px; }
+        .sidebar-menu { display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
+        .sidebar-menu a { color: #94a3b8; text-decoration: none; padding: 12px 16px; border-radius: 8px; display: flex; align-items: center; font-weight: 500; transition: all 0.2s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: #1e293b; color: #38bdf8; padding-left: 20px; }
+        .logout-btn { background: #ef4444; color: white !important; text-align: center; justify-content: center; font-weight: bold; }
+        .logout-btn:hover { background: #dc2626 !important; color: white !important; }
+
+        /* Main Content Container */
+        .main-content { flex: 1; padding: 40px; overflow-y: auto; }
+        
+        /* Top Navigation Bar */
+        .top-navbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; }
+        .search-box input { padding: 10px 16px; width: 300px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: white; transition: 0.2s; }
+        .search-box input:focus { border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+        .user-profile-badge { display: flex; align-items: center; gap: 10px; background: white; padding: 8px 16px; border-radius: 30px; border: 1px solid #e2e8f0; font-weight: 600; font-size: 14px; }
+        .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; }
+
+        /* Welcome Premium Banner */
+        .premium-banner { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 32px; border-radius: 16px; margin-bottom: 35px; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); display: flex; justify-content: space-between; align-items: center; }
+        .premium-banner h2 { font-size: 26px; margin-bottom: 8px; color: #38bdf8; }
+        .premium-banner p { color: #94a3b8; font-size: 15px; }
+        .quick-action-btns { display: flex; gap: 12px; }
+        .action-btn { background: #38bdf8; color: #0f172a; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; text-decoration: none; display: inline-block; }
+        .action-btn:hover { background: #0ea5e9; transform: translateY(-2px); }
+
+        /* Stats Grid Dashboard */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 35px; }
+        .stat-card { background: white; padding: 24px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; position: relative; overflow: hidden; }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #38bdf8; }
+        .stat-card h3 { color: #64748b; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+        .stat-card p { color: #0f172a; font-size: 32px; font-weight: 700; }
+
+        /* Lower Grid: Charts & Activities */
+        .dashboard-row { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+        .panel { background: white; padding: 24px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .panel h4 { font-size: 18px; color: #0f172a; margin-bottom: 20px; font-weight: 600; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
+        
+        /* Table Style */
+        .emp-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .emp-table th { padding: 12px; background: #f1f5f9; color: #475569; font-weight: 600; }
+        .emp-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
+        .badge { background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+
+        /* Activity List Item style */
+        .activity-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-text { font-weight: 500; }
+        .activity-time { color: #94a3b8; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand">HORILLA ENTERPRISE</div>
+        <div class="sidebar-menu">
+            <a href="/dashboard/" class="active">🏠 Home Dashboard</a>
+            <a href="/employee-hub/">👥 Employee Hub</a>
+            <a href="/attendance/">🕒 Time & Attendance</a>
+            <a href="/leave/">🌴 Leave Center</a>
+            <a href="/payroll/">💼 Payroll & Salary</a>
+            <a href="#">📝 Letter Requests</a>
+            <a href="#">⚙️ App Settings</a>
+        </div>
+        <a href="/logout/" class="sidebar-menu a logout-btn">🔒 Secure Logout</a>
+    </div>
+
+    <div class="main-content">
+        <div class="top-navbar">
+            <div class="search-box">
+                <input type="text" placeholder="Search employees, requests, or actions...">
+            </div>
+            <div class="user-profile-badge">
+                <span class="status-dot"></span>
+                System Admin
+            </div>
+        </div>
+
+        <div class="premium-banner">
+            <div>
+                <h2>Welcome to Enterprise Dashboard</h2>
+                <p>Everything is fully operational. Manage your company records in real-time.</p>
+            </div>
+            <div class="quick-action-btns">
+                <a href="/add-employee/" class="action-btn">+ Add Employee</a>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Directory</h3>
+                <p>{{ total_employees }}</p>
+            </div>
+            <div class="stat-card" style="border-left-color: #10b981;">
+                <h3 style="color: #10b981;">Checked In Today</h3>
+                <p>{{ present_today }}</p>
+            </div>
+            <div class="stat-card" style="border-left-color: #f59e0b;">
+                <h3 style="color: #f59e0b;">Active Leaves</h3>
+                <p>{{ on_leave }}</p>
+            </div>
+            <div class="stat-card" style="border-left-color: #ef4444;">
+                <h3 style="color: #ef4444;">Pending Action</h3>
+                <p>{{ pending_requests }}</p>
+            </div>
+        </div>
+
+        <div class="dashboard-row">
+            <div class="panel">
+                <h4>👥 Active Employee Directory</h4>
+                <table class="emp-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emp in employees %}
+                        <tr>
+                            <td style="font-weight: 600;">{{ emp.name }}</td>
+                            <td style="color: #64748b;">{{ emp.email }}</td>
+                            <td><span class="badge">{{ emp.department }}</span></td>
+                            <td><span style="color: #10b981; font-weight: bold;">● Active</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" style="padding: 30px; text-align: center; color: #94a3b8;">No employees added yet. Click "+ Add Employee" to start!</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="panel">
+                <h4>🔔 Real-time Activity Log</h4>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="activity-text">System initialized</span>
+                        <span class="activity-time">Just now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
